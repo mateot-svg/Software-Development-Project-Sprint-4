@@ -2,18 +2,17 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-
-# Load data (make sure this is only done once at the start of your app)
-df = pd.read_csv(r'G:\Data_Science\Git_Repositories\Software-Development-Project\vehicles_us.csv')
+# Load data 
+df = pd.read_csv('data/vehicles_us.csv')
 df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
-# Assuming preprocessing and cleaning have already been done before this script runs
+
 
 # Title for the entire app
 st.title('Vehicle Data Analysis Dashboard')
 
-#create a text header above the data frame
-st.header ('Data viewer')
-#display the dataframe with streamlit
+# Create a text header above the data frame
+st.header('Data viewer')
+# Display the dataframe with streamlit
 st.dataframe(df)
 
 # Select a visualization type
@@ -32,7 +31,7 @@ elif viz_type == 'Scatter Plot of Price vs Odometer':
         fig_scatter = px.scatter(df, x='odometer', y='price', color='condition', title='Price vs. Odometer by Condition', hover_data=['model'])
         st.plotly_chart(fig_scatter, use_container_width=True)
 
-elif viz_type == 'Feature-based Histogram':
+elif viz_type == 'Custom Histogram':
     # Dropdown to select the feature for a custom histogram
     selected_column = st.selectbox('Select a feature to display histogram:', 
                                    options=df.select_dtypes(include=['int64', 'float64', 'boolean']).columns.tolist())
